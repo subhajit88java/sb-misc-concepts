@@ -1,11 +1,10 @@
-package com.subhajit.sbmiscconcepts.springbean.service;
+package com.subhajit.sbmiscconcepts.springbean.servicelocator.bean;
 
 import org.springframework.stereotype.Component;
-
 import com.subhajit.sbmiscconcepts.springbean.config.CompanyInterface;
 
 @Component("CG")
-public class CapgeminiClasss implements CompanyInterface{
+public class CapgeminiCompany implements CompanyInterface{
 
 	@Override
 	public String getCompanyName() {

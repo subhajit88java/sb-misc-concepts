@@ -1,11 +1,10 @@
-package com.subhajit.sbmiscconcepts.springbean.service;
+package com.subhajit.sbmiscconcepts.springbean.servicelocator.bean;
 
 import org.springframework.stereotype.Component;
-
 import com.subhajit.sbmiscconcepts.springbean.config.CompanyInterface;
 
 @Component("INT")
-public class IndusnetClass implements CompanyInterface{
+public class IndusnetCompany implements CompanyInterface{
 
 	@Override
 	public String getCompanyName() {
