@@ -9,7 +9,7 @@ public class BcryptController {
 	
 	@GetMapping("/bcrypt-encode")
 	public String bcryptEncode() {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A, 12);
 		String password = "a";
 		String encodedPassword = passwordEncoder.encode(password);
 		System.out.println("Encoded password : " + encodedPassword);
