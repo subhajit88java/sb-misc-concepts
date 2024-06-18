@@ -2,6 +2,7 @@ package com.subhajit.sbmiscconcepts.springbean.order.bean;
 
 
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.subhajit.sbmiscconcepts.springbean.config.OrderBeanInterface;
