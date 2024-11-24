@@ -21,12 +21,12 @@ public class SpringBeanScopeController {
 	@Qualifier("application-scope")
 	private ScopeInterface application;
 	
-	// If bean is is session scope then autowiring will fail.
+	// If bean is in session scope then autowiring will fail.
 //	@Autowired
 //	@Qualifier("session-scope")
 //	private ScopeInterface session;
 	
-	// If bean is is session scope then autowiring will fail.
+	// If bean is in session scope then autowiring will fail.
 //	@Autowired
 //	@Qualifier("request-scope")
 //	private ScopeInterface request;

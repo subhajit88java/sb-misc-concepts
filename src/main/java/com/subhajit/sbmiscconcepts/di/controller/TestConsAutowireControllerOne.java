@@ -21,7 +21,7 @@ public class TestConsAutowireControllerOne {
         System.out.println("In TestConsAutowireControllerOne, constructor 1 : " + System.identityHashCode(bone));
         this.constructorBeanOne = bone;
     }*/
-   /* @Autowired
+    @Autowired
     public TestConsAutowireControllerOne(@Qualifier("bone") BeanInterface one,@Qualifier("btwo") BeanInterface two, BeanInterface2 three){
         System.out.println("In TestConsAutowireControllerOne, constructor 2, bone : " + System.identityHashCode(one));
         System.out.println("In TestConsAutowireControllerOne, constructor 2, btwo : " + System.identityHashCode(two));
@@ -29,8 +29,8 @@ public class TestConsAutowireControllerOne {
         this.constructorBeanOne = one;
         this.constructorBeanTwo = two;
         this.constructorBeanThree = three;
-    }*/
-    /*@GetMapping("/test-di-cons-one")
+    }
+    @GetMapping("/test-di-cons-one")
     public String testDiThree(){
         System.out.println("In TestConsAutowireControllerOne, bone : " + System.identityHashCode(constructorBeanOne));
         System.out.println("In TestConsAutowireControllerOne, btwo : " + System.identityHashCode(constructorBeanTwo));
@@ -39,5 +39,5 @@ public class TestConsAutowireControllerOne {
         constructorBeanTwo.printBeanName();
         constructorBeanThree.printBeanName();
         return "Success!";
-    }*/
+    }
 }
