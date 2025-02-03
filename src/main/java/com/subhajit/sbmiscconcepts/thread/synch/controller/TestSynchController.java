@@ -1,6 +1,7 @@
-package com.subhajit.sbmiscconcepts.asynch.controller;
+package com.subhajit.sbmiscconcepts.thread.synch.controller;
 
-import com.subhajit.sbmiscconcepts.asynch.service.TestAsynchService;
+import com.subhajit.sbmiscconcepts.thread.asynch.service.TestAsynchService;
+import com.subhajit.sbmiscconcepts.thread.synch.service.TestSynchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,18 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-public class TestAsynchController {
+public class TestSynchController {
 
     @Autowired
-    private TestAsynchService testAsynchService;
+    private TestSynchService testSynchService;
 
-    @GetMapping("/test-async-flow-controller")
+    @GetMapping("/test-sync-flow-controller")
     @Async("asyncExecutor")
-    public CompletableFuture<String> testAsynchFlowController() {
+    public CompletableFuture<String> testSynchFlowController() {
         System.out.println("Controller Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
 
-        testAsynchService.testAsynchFlowController();
+        testSynchService.testSynchFlowController();
 
         System.out.println("Controller Thread Ends.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
@@ -29,12 +30,12 @@ public class TestAsynchController {
 
     }
 
-    @GetMapping("/test-async-flow-service")
-    public CompletableFuture<String> testAsynchFlowService() {
+    @GetMapping("/test-sync-flow-service")
+    public CompletableFuture<String> testSynchFlowService() {
         System.out.println("Controller Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
 
-        CompletableFuture<String> serviceOutput = testAsynchService.testAsynchFlowService();
+        CompletableFuture<String> serviceOutput = testSynchService.testSynchFlowService();
 
         System.out.println("Controller Thread Ends.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
@@ -44,13 +45,13 @@ public class TestAsynchController {
         return serviceOutput;
     }
 
-    @GetMapping("/test-async-flow-multiple-service")
-    public CompletableFuture<String> testAsynchFlowMultipleService() {
+    @GetMapping("/test-sync-flow-multiple-service")
+    public CompletableFuture<String> testSynchFlowMultipleService() {
         System.out.println("Controller Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
 
-        CompletableFuture<String> serviceOutput1 = testAsynchService.testAsynchFlowMultipleService1();
-        CompletableFuture<String> serviceOutput2 = testAsynchService.testAsynchFlowMultipleService2();
+        CompletableFuture<String> serviceOutput1 = testSynchService.testSynchFlowMultipleService1();
+        CompletableFuture<String> serviceOutput2 = testSynchService.testSynchFlowMultipleService2();
 
         System.out.println("Controller Thread Ends.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
@@ -60,12 +61,12 @@ public class TestAsynchController {
         return CompletableFuture.completedFuture(serviceOutput1.getNow("serviceOutput1") + " - " + serviceOutput2.getNow("serviceOutput1"));
     }
 
-    @GetMapping("/test-async-flow-service-exception")
-    public CompletableFuture<String> testAsynchFlowServiceException() {
+    @GetMapping("/test-sync-flow-service-exception")
+    public CompletableFuture<String> testSynchFlowServiceException() {
         System.out.println("Controller Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
 
-        CompletableFuture<String> serviceOutput = testAsynchService.testAsynchFlowServiceException();
+        CompletableFuture<String> serviceOutput = testSynchService.testSynchFlowServiceException();
 
         System.out.println("Controller Thread Ends.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());

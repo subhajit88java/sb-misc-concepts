@@ -8,21 +8,71 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.subhajit.sbmiscconcepts.thread.service.ThreadService;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 public class TestThreadController {
 	
 	@Autowired
 	private ThreadService threadService;
+
+	@GetMapping("/test-thread-synch/{flag}")
+	public String testThreadSynch(@PathVariable("flag") String flag) {
+		System.out.println("Main Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
+				+ " Thread Name : " + Thread.currentThread().getName() + " - " + flag);
+
+		threadService.testThreadSynch(flag);
+
+		System.out.println("Main thread ends for flag : " + flag);
+
+		return "Thread id => " + Thread.currentThread().getId() + " | Thread name => " + Thread.currentThread().getName() + " completed!";
+	}
+
+	@GetMapping("/test-thread-unsynch/{flag}/{monitor}")
+	public String testThreadUnSynch(@PathVariable("flag") String flag, @PathVariable("monitor") String monitor) {
+		System.out.println("Main Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
+				+ " Thread Name : " + Thread.currentThread().getName() + " - " + flag + " - " + monitor);
+
+		threadService.testThreadUnSynch(flag, monitor);
+
+		System.out.println("Main thread ends for flag : " + flag + " - " + monitor);
+
+		return Thread.currentThread().getName() + " completed!";
+	}
 	
-	@GetMapping("/test-thread/{flag}/{monitor}")
-	public String testThread(@PathVariable("flag") String flag, @PathVariable("monitor") String monitor) {
+	@GetMapping("/test-thread-class-level-synch-block-one/{flag}/{monitor}")
+	public String testThreadClassLvlSynchBlockOne(@PathVariable("flag") String flag, @PathVariable("monitor") String monitor) {
 		System.out.println("Main Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
 				+ " Thread Name : " + Thread.currentThread().getName() + " - " + flag + " - " + monitor);
 		
-		threadService.testThreadService(flag, monitor);
+		threadService.testThreadClassLvlSynchBlockOne(flag, monitor);
 		
 		System.out.println("Main thread ends for flag : " + flag + " - " + monitor);
 		
+		return Thread.currentThread().getName() + " completed!";
+	}
+
+	@GetMapping("/test-thread-class-level-synch-block-two")
+	public String testThreadClassLvlSynchBlockTwo() {
+		System.out.println("Main Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
+				+ " Thread Name : " + Thread.currentThread().getName());
+
+		threadService.testThreadClassLvlSynchBlockTwo();
+
+		System.out.println("Main thread ends");
+
+		return Thread.currentThread().getName() + " completed!";
+	}
+
+	@GetMapping("/test-thread-object-level-synch-block/{flag}/{monitor}")
+	public String testThreadObjectLvlSynchBlock(@PathVariable("flag") String flag, @PathVariable("monitor") String monitor) {
+		System.out.println("Main Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
+				+ " Thread Name : " + Thread.currentThread().getName() + " - " + flag + " - " + monitor);
+
+		threadService.testThreadObjectLvlSynchBlock(flag, monitor);
+
+		System.out.println("Main thread ends for flag : " + flag + " - " + monitor);
+
 		return Thread.currentThread().getName() + " completed!";
 	}
 

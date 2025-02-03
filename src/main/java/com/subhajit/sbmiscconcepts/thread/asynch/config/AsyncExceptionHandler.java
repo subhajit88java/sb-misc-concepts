@@ -1,4 +1,4 @@
-package com.subhajit.sbmiscconcepts.asynch.config;
+package com.subhajit.sbmiscconcepts.thread.asynch.config;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 

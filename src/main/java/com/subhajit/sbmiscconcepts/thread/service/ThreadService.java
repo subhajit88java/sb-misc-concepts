@@ -13,17 +13,54 @@ public class ThreadService {
 
 	@Autowired
 	private ThreadApi threadApi;
-		
-	public void testThreadService(String flag, String monitor) {
+
+	public void testThreadSynch(String flag) {
+		System.out.println("testThreadSynch starts for Flag : " + flag);
+		try {
+			Thread.sleep(5000);
+		}catch(Exception e) {}
+		System.out.println("testThreadSynch ends for flag ==> " + flag);
+	}
+
+	public void testThreadUnSynch(String flag, String monitor) {
 		System.out.println("In service Flag : " + flag + " - " + System.identityHashCode(monitor));
-		synchronized (monitor.getClass()) {
-			System.out.println("Under synchronized block for flag ==> " + flag + " - " + monitor);
+			System.out.println("Usynchronized block starts for flag ==> " + flag + " - " + monitor);
 			try {
 				Thread.sleep(20000);
 			}catch(Exception e) {}
-			System.out.println("Synchronized block ends for flag ==> " + flag + " - " + monitor);
-		}
+			System.out.println("Usynchronized block ends for flag ==> " + flag + " - " + monitor);
+	}
 		
+	public void testThreadClassLvlSynchBlockOne(String flag, String monitor) {
+		System.out.println("In service Flag : " + flag + " - " + System.identityHashCode(monitor));
+		synchronized (monitor.getClass()) {
+			System.out.println("Class level synchronized block starts for flag ==> " + flag + " - " + monitor);
+			try {
+				Thread.sleep(20000);
+			}catch(Exception e) {}
+			System.out.println("Class level synchronized block ends for flag ==> " + flag + " - " + monitor);
+		}
+	}
+
+	public void testThreadClassLvlSynchBlockTwo() {
+		synchronized (String.class) {
+			System.out.println("Class level synchronized block starts");
+			try {
+				Thread.sleep(20000);
+			}catch(Exception e) {}
+			System.out.println("Class level synchronized block ends");
+		}
+	}
+
+	public void testThreadObjectLvlSynchBlock(String flag, String monitor) {
+		System.out.println("In service Flag : " + flag + " - " + System.identityHashCode(monitor));
+		synchronized (monitor) {
+			System.out.println("Object level synchronized block starts for flag ==> " + flag + " - " + monitor);
+			try {
+				Thread.sleep(20000);
+			}catch(Exception e) {}
+			System.out.println("Object level synchronized block ends for flag ==> " + flag + " - " + monitor);
+		}
 	}
 
 	public void testThreadFlow() {

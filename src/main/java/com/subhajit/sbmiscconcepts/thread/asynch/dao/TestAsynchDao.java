@@ -1,4 +1,4 @@
-package com.subhajit.sbmiscconcepts.asynch.dao;
+package com.subhajit.sbmiscconcepts.thread.asynch.dao;
 
 import org.springframework.stereotype.Component;
 
