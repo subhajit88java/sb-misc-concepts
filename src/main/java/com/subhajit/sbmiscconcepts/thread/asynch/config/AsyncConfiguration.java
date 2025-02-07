@@ -19,7 +19,7 @@ public class AsyncConfiguration extends AsyncConfigurerSupport {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(5);
         executor.setMaxPoolSize(5);
-        executor.setQueueCapacity(100);
+        executor.setQueueCapacity(5);
         executor.setThreadNamePrefix("Suvo1AsynchThread-");
         executor.initialize();
         return executor;

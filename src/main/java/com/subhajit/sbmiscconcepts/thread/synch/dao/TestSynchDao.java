@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestSynchDao {
 
-    public void testSynchFlowController(){
+    public void testSynchFlow(String flag){
         System.out.println("Dao Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
-                + " Thread Name : " + Thread.currentThread().getName());
+                + " Thread Name : " + Thread.currentThread().getName() + " for flag : " + flag);
 
         try{
             Thread.sleep(10000);
@@ -15,7 +15,7 @@ public class TestSynchDao {
 
 
         System.out.println("Dao Thread Ends.................." + " Thread Id : " + Thread.currentThread().getId()
-                + " Thread Name : " + Thread.currentThread().getName());
+                + " Thread Name : " + Thread.currentThread().getName() + " for flag : " + flag);
 
     }
 
@@ -32,4 +32,5 @@ public class TestSynchDao {
                 + " Thread Name : " + Thread.currentThread().getName());
 
     }
+
 }

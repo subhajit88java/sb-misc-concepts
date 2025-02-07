@@ -3,8 +3,11 @@ package com.subhajit.sbmiscconcepts.thread.synch.controller;
 import com.subhajit.sbmiscconcepts.thread.asynch.service.TestAsynchService;
 import com.subhajit.sbmiscconcepts.thread.synch.service.TestSynchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.CompletableFuture;
@@ -15,65 +18,81 @@ public class TestSynchController {
     @Autowired
     private TestSynchService testSynchService;
 
-    @GetMapping("/test-sync-flow-controller")
-    @Async("asyncExecutor")
-    public CompletableFuture<String> testSynchFlowController() {
+    @GetMapping("/test-sync-flow/{flag}")
+    public ResponseEntity<?> testSynchFlow(@PathVariable("flag") String flag) {
         System.out.println("Controller Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
-                + " Thread Name : " + Thread.currentThread().getName());
+                + " Thread Name : " + Thread.currentThread().getName() + " for flag : " + flag);
 
-        testSynchService.testSynchFlowController();
+        testSynchService.testSynchFlow(flag);
 
         System.out.println("Controller Thread Ends.................." + " Thread Id : " + Thread.currentThread().getId()
-                + " Thread Name : " + Thread.currentThread().getName());
+                + " Thread Name : " + Thread.currentThread().getName() + " for flag : " + flag);
 
-        return CompletableFuture.completedFuture(Thread.currentThread().getId() + " - " + Thread.currentThread().getName());
+        return new ResponseEntity<>(" Thread Id : " + Thread.currentThread().getId() + " Thread Name : " + Thread.currentThread().getName() + " for flag : " + flag, HttpStatus.OK);
 
-    }
-
-    @GetMapping("/test-sync-flow-service")
-    public CompletableFuture<String> testSynchFlowService() {
-        System.out.println("Controller Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
-                + " Thread Name : " + Thread.currentThread().getName());
-
-        CompletableFuture<String> serviceOutput = testSynchService.testSynchFlowService();
-
-        System.out.println("Controller Thread Ends.................." + " Thread Id : " + Thread.currentThread().getId()
-                + " Thread Name : " + Thread.currentThread().getName());
-
-        CompletableFuture.allOf(serviceOutput);
-
-        return serviceOutput;
     }
 
     @GetMapping("/test-sync-flow-multiple-service")
-    public CompletableFuture<String> testSynchFlowMultipleService() {
+    public  ResponseEntity<?> testSynchFlowMultipleService() {
+
         System.out.println("Controller Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
 
-        CompletableFuture<String> serviceOutput1 = testSynchService.testSynchFlowMultipleService1();
-        CompletableFuture<String> serviceOutput2 = testSynchService.testSynchFlowMultipleService2();
+        String serviceOutput1 = testSynchService.testSynchFlowMultipleService1();
+        String serviceOutput2 = testSynchService.testSynchFlowMultipleService2();
 
         System.out.println("Controller Thread Ends.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
 
-        CompletableFuture.allOf(serviceOutput1, serviceOutput2).join();
-
-        return CompletableFuture.completedFuture(serviceOutput1.getNow("serviceOutput1") + " - " + serviceOutput2.getNow("serviceOutput1"));
+        return new ResponseEntity<>(" Thread Id : " + Thread.currentThread().getId() + " Thread Name : " + Thread.currentThread().getName(), HttpStatus.OK);
     }
 
-    @GetMapping("/test-sync-flow-service-exception")
-    public CompletableFuture<String> testSynchFlowServiceException() {
-        System.out.println("Controller Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
+    @GetMapping("/test-thread-unsynch/{flag}/{monitor}")
+    public String testThreadUnSynch(@PathVariable("flag") String flag, @PathVariable("monitor") String monitor) {
+        System.out.println("Main Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
+                + " Thread Name : " + Thread.currentThread().getName() + " - " + flag + " - " + monitor);
+
+        testSynchService.testThreadUnSynch(flag, monitor);
+
+        System.out.println("Main thread ends for flag : " + flag + " - " + monitor);
+
+        return Thread.currentThread().getName() + " completed!";
+    }
+
+    @GetMapping("/test-thread-class-level-synch-block-one/{flag}/{monitor}")
+    public String testThreadClassLvlSynchBlockOne(@PathVariable("flag") String flag, @PathVariable("monitor") String monitor) {
+        System.out.println("Main Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
+                + " Thread Name : " + Thread.currentThread().getName() + " - " + flag + " - " + monitor);
+
+        testSynchService.testThreadClassLvlSynchBlockOne(flag, monitor);
+
+        System.out.println("Main thread ends for flag : " + flag + " - " + monitor);
+
+        return Thread.currentThread().getName() + " completed!";
+    }
+
+    @GetMapping("/test-thread-class-level-synch-block-two")
+    public String testThreadClassLvlSynchBlockTwo() {
+        System.out.println("Main Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
                 + " Thread Name : " + Thread.currentThread().getName());
 
-        CompletableFuture<String> serviceOutput = testSynchService.testSynchFlowServiceException();
+        testSynchService.testThreadClassLvlSynchBlockTwo();
 
-        System.out.println("Controller Thread Ends.................." + " Thread Id : " + Thread.currentThread().getId()
-                + " Thread Name : " + Thread.currentThread().getName());
+        System.out.println("Main thread ends");
 
-        CompletableFuture.allOf(serviceOutput);
+        return Thread.currentThread().getName() + " completed!";
+    }
 
-        return serviceOutput;
+    @GetMapping("/test-thread-object-level-synch-block/{flag}/{monitor}")
+    public String testThreadObjectLvlSynchBlock(@PathVariable("flag") String flag, @PathVariable("monitor") String monitor) {
+        System.out.println("Main Thread Starts.................." + " Thread Id : " + Thread.currentThread().getId()
+                + " Thread Name : " + Thread.currentThread().getName() + " - " + flag + " - " + monitor);
+
+        testSynchService.testThreadObjectLvlSynchBlock(flag, monitor);
+
+        System.out.println("Main thread ends for flag : " + flag + " - " + monitor);
+
+        return Thread.currentThread().getName() + " completed!";
     }
 
 }
