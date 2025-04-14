@@ -18,7 +18,7 @@ public class OrderBeanOne implements OrderBeanInterface, Ordered{
 
 	@Override
 	public int getOrder() {
-		return OrderingEnum.valueOf(this.getClass().getSimpleName()).ordinal();
+		return  OrderingEnum.valueOf(this.getClass().getSimpleName()).ordinal();
 	}
 
 
